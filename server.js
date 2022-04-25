@@ -104,25 +104,33 @@ http.createServer(function (req, res) {
                     
                     let dbo = db.db("Venues");
                     let collection = dbo.collection("Restaurants");
-                    let results;
+                    let results, content = "<div class='results'>";
 
                     if (fields["city"] == "all") {
                         results = await collection.find({},
                                                         {_id: 0}).toArray();
                     } else {
-                        console.log("hererherwekrn")
-                        console.log("QUERY: ", fields["city"]);
                         results = await collection.find({cityState: fields["city"]},
                                                   {_id: 0}).toArray();;
                     }
 
-                    console.log(results);
+                    for (i = 0; i < results.length; i++) {
+                        content += `<h3>Name: ${results[i]["name"]}</h3>`;
+                        content += `<div>Address: ${results[i]["streetAddress"]} ${results[i]["cityState"]} ${results[i]["zipCode"]}</div>`;
+                        content += `<div>Minimum Capacity: ${results[i]["minCapacity"]}</div>`;
+                        content += `<div>Maximum Capacity: ${results[i]["maxCapacity"]}</div>`;
+                        content += `<div>Flat Fee: $${results[i]["flatFee"]}</div>`;
+                        content += `<div>Venue Website: ${results[i]["website"]}</div>`;
+                        content += "<br>";
+                    }
+
+                    results += "</div>";
 
                     let browse = "city_form.html";
                     fs.readFile(browse, function (err, txt) {
                         res.writeHead(200, {'Content-Type': 'text/html'});
                         res.write(txt);
-                        // res.write(results)
+                        res.write(content);
                         res.end();
                     });
 
