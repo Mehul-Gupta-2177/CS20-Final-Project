@@ -54,7 +54,8 @@ http.createServer(function (req, res) {
                             minCapacity   : fields["minCapacity"],
                             maxCapacity   : fields["maxCapacity"],
                             flatFee       : fields["flatFee"],
-                            website       : fields["website"]
+                            website       : fields["website"],
+                            bookedDates   : []
                         });
 
                         db.close();
@@ -149,7 +150,6 @@ http.createServer(function (req, res) {
             });
         }
     }
-    // TODO
     else if (req.url == "/booking") {
         // booking page
         console.log("requesting booking");
@@ -165,6 +165,64 @@ http.createServer(function (req, res) {
                     
                     let dbo = db.db("Venues");
                     let collection = dbo.collection("Restaurants");
+
+                    let venue = collection.find({name : fields["Name"]});
+                    let verified = true;
+
+                    // verifying event date
+                    for (i = 0; i < venue["boookedDates"].length; i++) {
+                        if (venue["bookedDates"][i] == fields["EventDate"]){
+                            verified = false;
+                            break
+                        }
+                    }
+
+                    if (verified) {
+                        // verifying email
+                        let apiResult = null;
+                        await emailVerifier.verify(fields['Email'], "2b1e810090b21cab8a8753ec6bd1f091c63126345e15fb9a616a041ac48c68976dcce52db8c416c9fa5c8291fa4d3b56")
+                        .then(async function (response) {
+                            apiResult = await response.valid();
+                        })
+                        .catch(err => {
+                            console.log('error', err)
+                        });
+
+                        if (apiResult) {
+                            // both email and date are verified 
+                            await collection.updateOne({name : fields["Name"]},
+                                                   {$push: {bookedDates: fields["EventDate"]}});
+
+                            // TODO: Send confirmation email
+                        
+                            let booking = "booking_form.html";
+                            fs.readFile(booking, function (err, txt) {
+                                res.writeHead(200, {'Content-Type': 'text/html'});
+                                res.write(txt);
+                                res.write(`<script>alert('Thank you for your booking! You will receive an email confirmation shortly');</script>`);
+                                res.end();
+                            });
+                        }
+                        else {
+                            console.log("Booking email did not pass verification");
+                            let booking = "booking_form.html";
+                            fs.readFile(booking, function (err, txt) {
+                                res.writeHead(200, {'Content-Type': 'text/html'});
+                                res.write(txt);
+                                res.write("<script>alert('Your email did not pass verification, please try again');</script>")
+                                res.end();
+                            });
+                        }
+                    } 
+                    else {
+                        let booking = "booking_form.html";
+                        fs.readFile(booking, function (err, txt) {
+                            res.writeHead(200, {'Content-Type': 'text/html'});
+                            res.write(txt);
+                            res.write(`<script>alert('${fields["Name"]} is not available for ${fields["EventDate"]}, please select a different date.');</script>`);
+                            res.end();
+                        });
+                    }
 
                     db.close();
                 });

@@ -133,19 +133,19 @@ b {
     <div class="content">
         <form name = 'booking' method ="POST"  action="/booking" >
             <label for="Name">Name:</label><br>
-            <input type="text" id="Name" name="Name" value=""><br>
+            <input type="text" id="Name" name="Name" value="" required><br>
         <br>
             <label for="Email">Email:</label><br>
-            <input type="text" id="Email" name="Email" value=""><br>
+            <input type="text" id="Email" name="Email" value="" required><br>
         <br>
             <label for="EventDate">Event Date:</label><br>
-            <input type="text" id="EventDate" name="EventDate" value=""><br>
+            <input type="text" id="EventDate" name="EventDate" value="" placeholder="mm/dd/yyyy" required><br>
         <br>
             <label for="venue">Venue:</label><br>
-            <input type="text" id="Venue" name="Venue" value=""><br>
+            <input type="text" id="Venue" name="Venue" value="" required><br>
         <br>
-            <label for="expectedCapacity">Event Date:</label><br>
-            <input type="text" id="expectedCapacity" name="expectedCapacity" value=""><br>
+            <label for="expectedCapacity">Expected Capacity:</label><br>
+            <input type="text" id="expectedCapacity" name="expectedCapacity" value="" required><br>
         <br>
         <input type = "button" name ="submitButton" value = "Submit" id = "submitButton">
         <br>
