@@ -20,7 +20,6 @@
         width: 100%;
         padding: 30px;
     }
-    
     nav {
         font-family: 'Merriweather', sans-serif;
         color: #F7FFF7;
@@ -121,34 +120,29 @@ b {
             </div>
 
         </div>
-</header>
+    </header>
 
-<div class="Body_One">
-    <p> <b> Event Booking Form </b> </p>
-    <br>
-    <p> Thank you for choosing SteerMyEvent as your event planning partner. Here, you can browse through our database of partner venues, select the one that best fits your needs, and make a request to book it. </p>
-    <br>
-    <p> Once you have booked the venue, someone from our team will be in touch within 24-48 hours to kickstart the finer planning for your (read: our) event!</p>
-</div>
     <div class="content">
-        <form name = 'booking' method ="POST"  action="/booking" >
-            <label for="Name">Name:</label><br>
-            <input type="text" id="Name" name="Name" value=""><br>
-        <br>
-            <label for="Email">Email:</label><br>
-            <input type="text" id="Email" name="Email" value=""><br>
-        <br>
-            <label for="EventDate">Event Date:</label><br>
-            <input type="text" id="EventDate" name="EventDate" value=""><br>
-        <br>
-            <label for="venue">Venue:</label><br>
-            <input type="text" id="Venue" name="Venue" value=""><br>
-        <br>
-            <label for="expectedCapacity">Event Date:</label><br>
-            <input type="text" id="expectedCapacity" name="expectedCapacity" value=""><br>
-        <br>
-        <input type = "button" name ="submitButton" value = "Submit" id = "submitButton">
-        <br>
+        <h2>Browse Venues</h2>
+        <form name = 'browse_venues' method ="POST"  action="/browse_venues" >
+            <p>Please select a city:</p>
+            <input type="radio" id="boston" name="city" value="Boston, MA">
+            <label for="boston">Boston</label><br>
+            <input type="radio" id="cambridge" name="city" value="Cambridge, MA">
+            <label for="cambridge">Cambridge</label><br>
+            <input type="radio" id="fenway" name="city" value="Fenway, MA">
+            <label for="fenway">Fenway</label><br>
+            <input type="radio" id="lowell" name="city" value="Lowell, MA">
+            <label for="lowell">Lowell</label><br>
+            <input type="radio" id="somerville" name="city" value="Somerville, MA">
+            <label for="somerville">Somerville</label><br>
+            <input type="radio" id="waltham" name="city" value="Waltham, MA">
+            <label for="waltham">Waltham</label><br>
+            <input type="radio" id="wellesly" name="city" value="Wellesly, MA">
+            <label for="wellesly">Wellesly</label><br>
+            <input type="radio" id="all" name="city" value="all">
+            <label for="all">All</label><br>
+            <input type="submit" value="Submit">
         </form>
     </div>
 </body>

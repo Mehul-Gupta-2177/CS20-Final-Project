@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SteerMyEvent</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -18,10 +21,20 @@ header {
     padding: 30px;
 }
 nav {
-    color: #fff4d1;
+    font-family: 'Merriweather', sans-serif;
+    color: #F7FFF7;
     top: 0;
-    font-size: 25px;
+    font-size: 20px;
     padding-right: 5%
+}
+p {
+  font-family: 'Merriweather', sans-serif;
+  color: #F7FFF7;
+}
+b {
+  font-family: 'Merriweather', sans-serif;
+  font-weight: bold;
+  color: #F7FFF7;
 }
 .Body_One, .Body_Two {
     background-color: black;
@@ -46,19 +59,20 @@ ul li {
     margin-top: 5px;
 }
 li a:hover {
-    background-color: red;
+    background-color: silver;
 }
 body {
     background-color: black;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
 }
 .button1, .button2 {
-    background: blueviolet;
+    background: #FFE66D;
+    font-family: 'Merriweather', sans-serif;
     border-radius: 999px;
-    box-shadow: blueviolet 0 10px 20px -10px;
+    box-shadow: #FFE66D 0 10px 20px -10px;
     box-sizing: border-box;
-    color: #FFFFFF;
+    color: black;
     cursor: pointer;
     font-size: 20px;
     line-height: 34px;
@@ -78,15 +92,22 @@ body {
 .container2
 {
   background-image: url("bar.jpeg");
-   margin-top: 2%;
+  margin-top: 0%;
+}
+h2 {
+    font-family: 'Lobster', sans-serif;
+    text-align: center;
+    color: #FFE66D;
+    font-size: 64px;
 }
 </style>
+
 </head>
 
 <body>
     <header>
             <div class="Top">
-                <h1 style="font-size: 45px;color:white; text-align: center; ">SteerMyEvent</h1>
+                <h2 style="font-size: 45px;color:white; text-align: center; ">SteerMyEvent</h2>
                 </div>
 
                 <div class="Bottom">
@@ -103,13 +124,13 @@ body {
     </header>
 
     <div class="container2">
-        <p style="margin-top: 0px; margin-bottom: 35%; font-size: 80px; color: #C19A6B;;">Driving you crazy with creativity</p>
+        <h2 style="margin-top: 0px; margin-bottom: 12%;">Driving you crazy with creativity!</h2>
     <div class="container1">
     <div class="but1" style="text-align: right; padding: 0.5em 0.5em; font-size: 20px">
         <button onclick="location.href = '/venue';" id="Button1" class="button1" >Register Venue<br> </button>
       </div>
       <div class="but1"style="text-align: left; padding: 0.5em 0.5em; font-size: 20px">
-          <button onclick="location.href = '/booking';" id="Button2" class="button2" >Book Venue<br> </button>
+          <button onclick="location.href = '/browse_venues';" id="Button2" class="button2" >Book Venue<br> </button>
         </div>
     </div>
   </div>
@@ -126,12 +147,11 @@ body {
     <br>
     <p> Partner with us today, and let us drive you crazy with our creativity! </p>
     </div>
-    <br><br>
     <div class="Body_Two">
-    <p> <strong> How The App Works</strong> </p>
+    <p> <b> How The App Works</b> </p>
     <br>
     <p> With the SteerMyEvent Web App, you can browse through our catalog of partner venues, choose the one that best meets your needs based on amenities, reviews, size, and pricing, and tentatively reserve it for your event. </p>
-    <br><br>
+    <br>
     <p> Once we contact the restaurant to confirm your booking, someone from our team will reach out to you to start planning the finer details of your event, such as decor, the food and drinks menu, and more! </p>
     <br>
     <p> If you are a venue interested in partnering with us, you can fill the Venue Partnership Form to join hands with us immediately! </p>

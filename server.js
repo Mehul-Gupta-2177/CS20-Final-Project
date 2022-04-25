@@ -3,6 +3,7 @@ var fs = require('fs');
 var formidable = require('formidable');
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb+srv://user_01:user_01_p@cluster0.b565f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const emailVerifier = require("verifier-node");
 
 http.createServer(function (req, res) {
     if(req.url == "/"){
@@ -23,36 +24,60 @@ http.createServer(function (req, res) {
         if (req.method.toLowerCase() == "post") {
             // venue submission form submitted
             var form = new formidable.IncomingForm();
-            form.parse(req, function (err, fields, files) {
+            form.parse(req, async function (err, fields, files) {
                 if (err) {console.log(err);}
             
-                MongoClient.connect(url, { useUnifiedTopology: false }, async function (err, db) {
-                    if (err) {console.log(err);}
-                    
-                    let dbo = db.db("Venues");
-                    let collection = dbo.collection("Restaurants");
+                // verifying email
+                let apiResult = null;
+                await emailVerifier.verify(fields['email'], "2b1e810090b21cab8a8753ec6bd1f091c63126345e15fb9a616a041ac48c68976dcce52db8c416c9fa5c8291fa4d3b56")
+                .then(async function (response) {
+                    apiResult = await response.valid();
+                })
+                .catch(err => {
+                    console.log('error', err)
+                });
 
-                    await collection.insertOne({
-                        name          : fields["name"],
-                        streetAddress : fields["streetAddress"],
-                        cityState     : fields["cityState"],
-                        zipCode       : fields["zipCode"],
-                        minCapacity   : fields["minCapacity"],
-                        maxCapacity   : fields["maxCapacity"],
-                        flatFee       : fields["flatFee"],
-                        website       : fields["website"]
+                if (apiResult) {
+                    console.log("Email passed verification, adding venue to database!");
+                    MongoClient.connect(url, { useUnifiedTopology: false }, async function (err, db) {
+                        if (err) {console.log(err);}
+                        
+                        let dbo = db.db("Venues");
+                        let collection = dbo.collection("Restaurants");
+
+                        await collection.insertOne({
+                            name          : fields["name"],
+                            email         : fields["email"],
+                            streetAddress : fields["streetAddress"],
+                            cityState     : fields["cityState"],
+                            zipCode       : fields["zipCode"],
+                            minCapacity   : fields["minCapacity"],
+                            maxCapacity   : fields["maxCapacity"],
+                            flatFee       : fields["flatFee"],
+                            website       : fields["website"]
+                        });
+
+                        db.close();
                     });
 
-                    db.close();
-                });
-            });
-
-            let index = "index.html";
-            fs.readFile(index, function (err, txt) {
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.write(txt);
-                res.write("<script>alert('Thank you for adding your venue!')</script>")
-                res.end();
+                    let index = "index.html";
+                    fs.readFile(index, function (err, txt) {
+                        res.writeHead(200, {'Content-Type': 'text/html'});
+                        res.write(txt);
+                        res.write("<script>alert('Thank you for adding your venue!')</script>");
+                        res.end();
+                    });
+                }
+                else {
+                    console.log("Email did not pass verification");
+                    let venue = "venue_form.html";
+                    fs.readFile(venue, function (err, txt) {
+                        res.writeHead(200, {'Content-Type': 'text/html'});
+                        res.write(txt);
+                        res.write("<script>alert('Your email did not pass verification, please try again')</script>")
+                        res.end();
+                    });
+                }
             });
         }
         else {
@@ -64,8 +89,61 @@ http.createServer(function (req, res) {
             });
         }
     }
+    else if (req.url == "/browse_venues") {
+        // browse venues page
+        console.log("requesting browsing venues");
+
+        if (req.method.toLowerCase() == "post") {
+            // city has been selected
+            var form = new formidable.IncomingForm();
+            form.parse(req, function (err, fields, files) {
+                if (err) {console.log(err);}
+
+                MongoClient.connect(url, { useUnifiedTopology: false }, async function (err, db) {
+                    if (err) {console.log(err);}
+                    
+                    let dbo = db.db("Venues");
+                    let collection = dbo.collection("Restaurants");
+                    let results;
+
+                    if (fields["city"] == "all") {
+                        results = await collection.find({},
+                                                        {_id: 0}).toArray();
+                    } else {
+                        console.log("hererherwekrn")
+                        console.log("QUERY: ", fields["city"]);
+                        results = await collection.find({cityState: fields["city"]},
+                                                  {_id: 0}).toArray();;
+                    }
+
+                    console.log(results);
+
+                    let browse = "city_form.html";
+                    fs.readFile(browse, function (err, txt) {
+                        res.writeHead(200, {'Content-Type': 'text/html'});
+                        res.write(txt);
+                        // res.write(results)
+                        res.end();
+                    });
+
+                    db.close();
+                });
+
+            });
+        }
+        else {
+            // form was not submitted
+            let browse = "city_form.html";
+            fs.readFile(browse, function (err, txt) {
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.write(txt);
+                res.end();
+            });
+        }
+    }
+    // TODO
     else if (req.url == "/booking") {
-        // customer page
+        // booking page
         console.log("requesting booking");
 
         if (req.method.toLowerCase() == "post") {
@@ -85,6 +163,7 @@ http.createServer(function (req, res) {
             });
         }
         else {
+            // form was not submitted
             let booking = "booking_form.html";
             fs.readFile(booking, function (err, txt) {
                 res.writeHead(200, {'Content-Type': 'text/html'});
