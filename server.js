@@ -1,9 +1,10 @@
-var http = require('http');
-var fs = require('fs');
-var formidable = require('formidable');
+const http = require('http');
+const fs = require('fs');
+const formidable = require('formidable');
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb+srv://user_01:user_01_p@cluster0.b565f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const emailVerifier = require("verifier-node");
+const nodemailer = require("nodemailer");
 
 http.createServer(function (req, res) {
     if(req.url == "/"){
@@ -243,12 +244,40 @@ http.createServer(function (req, res) {
                     }
 
                     // both email and date are verified 
-                    console.log("email and date both verified!");
+                    console.log("venue, email, and date both verified!");
                     
                     await collection.updateOne({name : fields["Venue"]},
                                             {$push: {bookedDates: fields["EventDate"]}});
 
                     // TODO: Send confirmation email
+                    let transporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                            user: "SteerMyEvent@gmail.com",
+                            pass: "rbwyrutayfmtzxsr"
+                        }
+                    });
+
+                    let message = `Hello ${fields["Name"]}, \n`;
+                    message += "Thank you for your booking!\nBelow are the details of your booking:\n\n";
+                    message += `Venue: ${fields["Venue"]}\n`;
+                    message += `Date: ${fields["EventDate"]}\n`;
+                    message += `Expected Capacity: ${fields["expectedCapacity"]}\n\n`;
+                    message += "Please feel free to email us back with any questions!\n";
+                    message += "Best,\nThe SteerMyEvent Team"
+
+
+                    let mailOptions = {
+                        from    : "SteerMyEvent@gmail.com",
+                        to      : fields["Email"],
+                        subject : "Your SteerMyEvent Booking",
+                        text    : message 
+                    };
+
+                    transporter.sendMail(mailOptions, function (err, info){
+                        if (err) {console.log(err);}
+                        else {console.log("Email sent: ", info.response);}
+                    });
                 
                     fs.readFile(booking, function (err, txt) {
                         res.writeHead(200, {'Content-Type': 'text/html'});

@@ -3,6 +3,7 @@
     "formidable": "^2.0.1",
     "mongodb": "^4.5.0",
     "node-fetch": "^2.6.7",
+    "nodemailer": "^6.7.3",
     "verifier-node": "^1.0.2"
   }
 }
