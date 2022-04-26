@@ -153,6 +153,7 @@ http.createServer(function (req, res) {
     else if (req.url == "/booking") {
         // booking page
         console.log("requesting booking");
+        let booking = "booking_form.html";
 
         if (req.method.toLowerCase() == "post") {
             // customer inquery form submitted
@@ -166,63 +167,95 @@ http.createServer(function (req, res) {
                     let dbo = db.db("Venues");
                     let collection = dbo.collection("Restaurants");
 
-                    let venue = collection.find({name : fields["Name"]});
-                    let verified = true;
+                    let venue = await collection.find({name : fields["Venue"]}).toArray();
+                    
+                    // verifying venue name
+                    if (venue.length == 0) {
+                        console.log("Booking venue name does not exist");
+                        
+                        fs.readFile(booking, function (err, txt) {
+                            res.writeHead(200, {'Content-Type': 'text/html'});
+                            res.write(txt);
+                            res.write(`<script>alert('${fields["Venue"]} is not one of our partnered venues, please try again.');</script>`);
+                            res.end();
+                        });
+                        return;
+                    }
+                    
+                    venue = venue[0];
 
                     // verifying event date
-                    for (i = 0; i < venue["boookedDates"].length; i++) {
+                    let dateVerified = true;
+
+                    for (i = 0; i < await venue["bookedDates"].length; i++) {
                         if (venue["bookedDates"][i] == fields["EventDate"]){
-                            verified = false;
+                            dateVerified = false;
                             break
                         }
                     }
 
-                    if (verified) {
-                        // verifying email
-                        let apiResult = null;
-                        await emailVerifier.verify(fields['Email'], "2b1e810090b21cab8a8753ec6bd1f091c63126345e15fb9a616a041ac48c68976dcce52db8c416c9fa5c8291fa4d3b56")
-                        .then(async function (response) {
-                            apiResult = await response.valid();
-                        })
-                        .catch(err => {
-                            console.log('error', err)
-                        });
+                    if (!dateVerified) {
+                        console.log("booking date verified to false");
 
-                        if (apiResult) {
-                            // both email and date are verified 
-                            await collection.updateOne({name : fields["Name"]},
-                                                   {$push: {bookedDates: fields["EventDate"]}});
-
-                            // TODO: Send confirmation email
-                        
-                            let booking = "booking_form.html";
-                            fs.readFile(booking, function (err, txt) {
-                                res.writeHead(200, {'Content-Type': 'text/html'});
-                                res.write(txt);
-                                res.write(`<script>alert('Thank you for your booking! You will receive an email confirmation shortly');</script>`);
-                                res.end();
-                            });
-                        }
-                        else {
-                            console.log("Booking email did not pass verification");
-                            let booking = "booking_form.html";
-                            fs.readFile(booking, function (err, txt) {
-                                res.writeHead(200, {'Content-Type': 'text/html'});
-                                res.write(txt);
-                                res.write("<script>alert('Your email did not pass verification, please try again');</script>")
-                                res.end();
-                            });
-                        }
-                    } 
-                    else {
-                        let booking = "booking_form.html";
                         fs.readFile(booking, function (err, txt) {
                             res.writeHead(200, {'Content-Type': 'text/html'});
                             res.write(txt);
-                            res.write(`<script>alert('${fields["Name"]} is not available for ${fields["EventDate"]}, please select a different date.');</script>`);
+                            res.write(`<script>alert('${fields["Venue"]} is not available for ${fields["EventDate"]}, please select a different date.');</script>`);
                             res.end();
                         });
+                        return;
                     }
+
+                    // verifying capacity
+                    if (fields["expectedCapacity"] < venue["minCapacity"] || fields["expectedCapacity"] > venue["maxCapacity"]) {
+                        console.log("Booking capacity goes out of range");
+                        
+                        fs.readFile(booking, function (err, txt) {
+                            res.writeHead(200, {'Content-Type': 'text/html'});
+                            res.write(txt);
+                            res.write(`<script>alert('${fields["expectedCapacity"]} is outside the capacity range for ${fields["Venue"]}, please try again.');</script>`);
+                            res.end();
+                        });
+                        return;
+                    }
+                        
+                    // verifying email
+                    let apiResult = null;
+                    await emailVerifier.verify(fields['Email'], "2b1e810090b21cab8a8753ec6bd1f091c63126345e15fb9a616a041ac48c68976dcce52db8c416c9fa5c8291fa4d3b56")
+                    .then(async function (response) {
+                        apiResult = await response.valid();
+                    })
+                    .catch(err => {
+                        console.log('error', err)
+                    });
+
+                    if (!apiResult) {
+
+                        console.log("Booking email did not pass verification");
+
+                        fs.readFile(booking, function (err, txt) {
+                            res.writeHead(200, {'Content-Type': 'text/html'});
+                            res.write(txt);
+                            res.write("<script>alert('Your email did not pass verification, please try again');</script>")
+                            res.end();
+                        });
+                        return;
+                    }
+
+                    // both email and date are verified 
+                    console.log("email and date both verified!");
+                    
+                    await collection.updateOne({name : fields["Venue"]},
+                                            {$push: {bookedDates: fields["EventDate"]}});
+
+                    // TODO: Send confirmation email
+                
+                    fs.readFile(booking, function (err, txt) {
+                        res.writeHead(200, {'Content-Type': 'text/html'});
+                        res.write(txt);
+                        res.write(`<script>alert('Thank you for your booking! You will receive an email confirmation shortly');</script>`);
+                        res.end();
+                    });
 
                     db.close();
                 });

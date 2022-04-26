@@ -113,7 +113,7 @@ b {
             <div class="Bottom">
               <nav>
                   <ul>
-                    <li style="padding-right: 5%"><a class="active" href="index.html" style="color: white">Home</a></li>
+                    <li style="padding-right: 5%"><a class="active" href="/" style="color: white">Home</a></li>
                     <li style="padding-right: 5%"><a href="/testimonials" style="color: white">Testimonials</a></li>
                     <li style="padding-right: 5%"><a href="/contact" style="color: white">Contact Us</a></li>
                   </ul>
@@ -139,7 +139,7 @@ b {
             <input type="text" id="Email" name="Email" value="" required><br>
         <br>
             <label for="EventDate">Event Date:</label><br>
-            <input type="text" id="EventDate" name="EventDate" value="" placeholder="mm/dd/yyyy" required><br>
+            <input type="date" id="EventDate" name="EventDate" value="" placeholder="mm/dd/yyyy" required><br>
         <br>
             <label for="venue">Venue:</label><br>
             <input type="text" id="Venue" name="Venue" value="" required><br>
@@ -147,9 +147,15 @@ b {
             <label for="expectedCapacity">Expected Capacity:</label><br>
             <input type="text" id="expectedCapacity" name="expectedCapacity" value="" required><br>
         <br>
-        <input type = "button" name ="submitButton" value = "Submit" id = "submitButton">
+        <input type = "submit">
         <br>
         </form>
     </div>
 </body>
 </html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script>
+    var date = new Date().toISOString().slice(0,10);
+    $('#EventDate').attr('min', date);
+</script>
