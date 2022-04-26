@@ -249,7 +249,7 @@ http.createServer(function (req, res) {
                     await collection.updateOne({name : fields["Venue"]},
                                             {$push: {bookedDates: fields["EventDate"]}});
 
-                    // TODO: Send confirmation email
+                    // sending confirmation email
                     let transporter = nodemailer.createTransport({
                         service: 'gmail',
                         auth: {
