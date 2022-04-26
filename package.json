@@ -1,9 +1,42 @@
 {
+  "name": "heroku-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "dependencies": {
+    "bson": "^4.6.3",
+    "asap": "^2.0.6",
+    "base64-js": "^1.5.1",
+    "buffer": "^5.7.1",
+    "denque": "^2.0.1",
+    "dezalgo": "^1.0.3",
     "formidable": "^2.0.1",
+    "ieee754": "^1.2.1",
+    "hexoid": "^1.0.0",
+    "ip": "^1.1.5",
+    "memory-pager": "^1.5.0",
     "mongodb": "^4.5.0",
+    "once": "^1.4.0",
+    "punycode": "^2.1.1",
     "node-fetch": "^2.6.7",
     "nodemailer": "^6.7.3",
-    "verifier-node": "^1.0.2"
-  }
+    "sparse-bitfield": "^3.0.3",
+    "qs": "^6.9.3",
+    "saslprep": "^1.0.3",
+    "socks": "^2.6.2",
+    "smart-buffer": "^4.2.0",
+    "tr46": "^3.0.0",
+    "whatwg-url": "^11.0.0",
+    "mongodb-connection-string-url": "^2.5.2",
+    "verifier-node": "^1.0.2",
+    "webidl-conversions": "^7.0.0",
+    "wrappy": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
 }
