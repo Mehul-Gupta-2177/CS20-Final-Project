@@ -191,8 +191,7 @@
       <label for="website">Website:</label><br>
       <input type="text" id="website" name="website" value=""><br>
       <br>
-       <div class="g-recaptcha" data-sitekey="6Ldx_qcfAAAAABelFCCZ9IZbWjunSm9xOeXmLgkL"></div>
-      <input type = "submit"  onclick="checkRecaptcha();"  class="button1"/>
+      <input type = "submit" class="button1"/>
       <br>
       </form>
   </div>
@@ -205,31 +204,6 @@
     hello@steermyevent.com
   </footer>
     
-        <script>
-    function checkRecaptcha() {
-      var response = grecaptcha.getResponse();
-      if(response.length == 0) {
-        //reCaptcha not verified
-        alert("no pass");
-      }
-      else {
-        //reCaptch verified
-        alert("pass");
-      }
-    }
-
-    // implement on the backend
-    function backend_API_challenge() {
-        var response = grecaptcha.getResponse();
-        $.ajax({
-            type: "POST",
-            url: 'https://www.google.com/recaptcha/api/siteverify',
-            data: {"secret" : "6Ldx_qcfAAAAAOf7UURicxQSmATE5BRamc3e4zZ1", "response" : response, "remoteip":"localhost"},
-            contentType: 'application/x-www-form-urlencoded',
-            success: function(data) { console.log(data); }
-        });
-    }
-    </script>
 
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
