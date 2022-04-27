@@ -306,8 +306,12 @@ http.createServer(function (req, res) {
         var fileStream = fs.createReadStream(imagePath);
         res.writeHead(200, {'Content-Type': 'image/jpeg'});
         fileStream.pipe(res);
-
-
+    }
+    else if (req.url.match("\.png$")){
+        var imagePath = path.join(__dirname, 'public', req.url);
+        var fileStream = fs.createReadStream(imagePath);
+        res.writeHead(200, {'Content-Type': 'image/png'});
+        fileStream.pipe(res);
     }
     else {
         // error page
