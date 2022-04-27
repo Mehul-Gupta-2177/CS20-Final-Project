@@ -95,8 +95,10 @@ body {
 }
 .container2
 {
-  background-image: url("bar.jpeg");
+  background-image: url("./images/bar.jpeg");
   margin-top: 0%;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 h2 {
     font-family: 'Lobster', sans-serif;
@@ -186,11 +188,11 @@ a {
 
     <div class="container2">
         <h2 style="margin-top: 0px; margin-bottom: 12%;">Driving you crazy with creativity!</h2>
-    <div class="container1">
-    <div class="but1" style="text-align: right; padding: 0.5em 0.5em; font-size: 20px">
-        <button onclick="location.href = '/venue';" id="Button1" class="button1" >Register Venue<br> </button>
-      </div>
-      <div class="but1"style="text-align: left; padding: 0.5em 0.5em; font-size: 20px">
+        <div class="container1">
+        <div class="but1" style="text-align: right; padding: 0.5em 0.5em; font-size: 20px">
+            <button onclick="location.href = '/venue';" id="Button1" class="button1" >Register Venue<br> </button>
+        </div>
+        <div class="but1"style="text-align: left; padding: 0.5em 0.5em; font-size: 20px">
           <button onclick="location.href = '/browse_venues';" id="Button2" class="button2" >Book Venue<br> </button>
         </div>
     </div>
@@ -245,4 +247,3 @@ a {
 
 
 </body>
-</html>

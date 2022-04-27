@@ -1,5 +1,6 @@
 const http = require('http');
 const fs = require('fs');
+const path = require('path');
 const formidable = require('formidable');
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb+srv://user_01:user_01_p@cluster0.b565f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -300,29 +301,19 @@ http.createServer(function (req, res) {
             });
         }
     }
-    else if (req.url == "/testimonials") {
-        // testimonials page
-        let testimonials = "testimonials.html";
-        fs.readFile(testimonials, function (err, txt) {
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write(txt);
-            res.end();
-        });
-    }
-    else if (req.url == "/contact") {
-        // contact page
-        let contact = "contact.html";
-        fs.readFile(contact, function (err, txt) {
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write(txt);
-            res.end();
-        });
+    else if (req.url.match("\.jpeg$")){
+        var imagePath = path.join(__dirname, 'public', req.url);
+        var fileStream = fs.createReadStream(imagePath);
+        res.writeHead(200, {'Content-Type': 'image/jpeg'});
+        fileStream.pipe(res);
+
+
     }
     else {
         // error page
         let error = "error.html";
         fs.readFile(error, function (err, txt) {
-            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.writeHead(404, {'Content-Type': 'text/html'});
             res.write(txt);
             res.end();
         });
