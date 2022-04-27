@@ -14,11 +14,20 @@
 
     header {
         background-color: black;
+        font-family: 'Merriweather', sans-serif;
         background-size: 100%;
         text-align: center;
         font-size: 20px;
         width: 100%;
-        padding: 30px;
+        padding: 0;
+        margin: 0;
+        border-bottom: 4px groove #C19A6B;
+    }
+    h2 {
+        font-family: 'Lobster', sans-serif;
+        text-align: center;
+        color: #FFE66D;
+        font-size: 64px;
     }
     nav {
         font-family: 'Merriweather', sans-serif;
@@ -46,10 +55,8 @@
         background-color: black;
     }
     .content {
-    
-    text-align: center;
-    padding-top: 1%;
-    
+        text-align: center;
+        padding-top: 1%;
     }
     
     label{
@@ -63,10 +70,11 @@
     font-size: 15px;
     }
     
-    .submitButton, button{
-      background: #C19A6B;
+    .button1, button{
+        background: #C19A6B;
         border-radius: 999px;
         box-shadow: #C19A6B 0 10px 20px -10px;
+        font-family: 'Merriweather', sans-serif;
         box-sizing: border-box;
         color: #FFFFFF;
         cursor: pointer;
@@ -79,17 +87,17 @@
         border: 0;
     }
     .Body_One {
-    background-color: black;
-    color: white;
-    border-right:3px black groove;
-    border-left: 3px black groove;
-    border-top:3px black groove;
-    border-bottom:3px black groove;
-      text-align: center;
-      margin-left:10%;
-      margin-right:10%;
-      padding: 2%;
-      display: block;
+        background-color: black;
+        color: white;
+        border-right:3px black groove;
+        border-left: 3px black groove;
+        border-top:3px black groove;
+        border-bottom:3px black groove;
+        text-align: center;
+        margin-left:10%;
+        margin-right:10%;
+        padding: 2%;
+        display: block;
 }
 
 p {
@@ -103,11 +111,23 @@ b {
 }
 
 .results {
-    color: white;
+    font-family: 'Merriweather', sans-serif;
+    color: #F7FFF7;
+    text-align: center;
+    border-style: solid;
+    border-color: #C19A6B;
+}
+
+footer {
+  font-family: 'Merriweather', sans-serif;
+  text-align: center;
+  color: #F7FFF7;
+  font-size: 16px;
+  padding-top: 10%
 }
 
 a {
-    color: white;
+    color: #F7FFF7;
     text-decoration: none;
 }
 
@@ -128,10 +148,9 @@ a:hover {
     </header>
 
     <div class="content">
-        <h2>Browse Venues</h2>
         <form name = 'browse_venues' method ="POST"  action="/browse_venues" >
-            <p>Please select a city:</p>
-            <input type="radio" id="boston" name="city" value="Boston, MA" required>
+            <p>Feel free to browse venues in the following cities.</p>
+            <input type="radio" id="boston" name="city" value="Boston, MA">
             <label for="boston">Boston</label><br>
             <input type="radio" id="cambridge" name="city" value="Cambridge, MA">
             <label for="cambridge">Cambridge</label><br>
@@ -147,12 +166,11 @@ a:hover {
             <label for="wellesley">Wellesley</label><br>
             <input type="radio" id="all" name="city" value="all">
             <label for="all">All</label><br>
-            <input type="submit" value="Submit">
+            <br>
+            <input type="submit" class="button1" value="Submit">
         </form>
+        <br>
+        <br>
     </div>
-
-    <a href="/booking" >
-        <button>Book Now</button>
-    </a>
 </body>
 </html>
