@@ -130,7 +130,7 @@ http.createServer(function (req, res) {
 
                     content += "<br><a href='/booking'><button>Book Now</button></a><br><br>";
 
-                    content += "</div><footer>SteerMyEvent, LLC<br>510-703-3986<br>hello@steermyevent.com</footer>";
+                    content += "</div><footer>SteerMyEvent, LLC<br>510-703-3986<br>steermyevent@gmail.com</footer>";
 
                     let browse = "city_form_after.html";
                     fs.readFile(browse, function (err, txt) {
