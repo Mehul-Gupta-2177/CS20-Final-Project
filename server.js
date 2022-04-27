@@ -119,18 +119,17 @@ http.createServer(function (req, res) {
 
                     for (i = 0; i < results.length; i++) {
                         content += `<h3 style='color: #FFE66D;'>${results[i]["name"]}</h3>`;
-                        content += `<div>Address: ${results[i]["streetAddress"]} ${results[i]["cityState"]} ${results[i]["zipCode"]}</div>`;
+                        content += `<div>Address: ${results[i]["streetAddress"]}. ${results[i]["cityState"]} ${results[i]["zipCode"]}</div>`;
                         content += `<div>Minimum Capacity: ${results[i]["minCapacity"]}</div>`;
                         content += `<div>Maximum Capacity: ${results[i]["maxCapacity"]}</div>`;
                         content += `<div>Flat Fee: $${results[i]["flatFee"]}</div>`;
                         content += "<br>";
-                        content += `<div>Venue Website: <a href=${results[i]["website"]} >${results[i]["name"]}</a></div>`;
+                        content += `<div>Venue Website: <a style='color: #C19A6B; text-decoration: underline;' href=${results[i]["website"]} >${results[i]["name"]}</a></div>`;
                         content += "<br>";
                     }
 
                     content += "<br><a href='/booking'><button>Book Now</button></a><br><br>";
-                    content += "</div><footer>SteerMyEvent, LLC<br>510-703-3986<br>hello@steermyevent.com</footer>";
-
+                    
                     let browse = "city_form_after.html";
                     fs.readFile(browse, function (err, txt) {
                         res.writeHead(200, {'Content-Type': 'text/html'});
