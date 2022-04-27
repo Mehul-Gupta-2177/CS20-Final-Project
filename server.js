@@ -129,7 +129,9 @@ http.createServer(function (req, res) {
                     }
 
                     content += "<br><a href='/booking'><button>Book Now</button></a><br><br>";
-                    
+
+                    content += "</div><footer>SteerMyEvent, LLC<br>510-703-3986<br>hello@steermyevent.com</footer>";
+
                     let browse = "city_form_after.html";
                     fs.readFile(browse, function (err, txt) {
                         res.writeHead(200, {'Content-Type': 'text/html'});
