@@ -98,7 +98,7 @@ body {
   background-image: url("./images/bar.jpeg");
   margin-top: 0%;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: auto;
 }
 h2 {
     font-family: 'Lobster', sans-serif;
@@ -149,13 +149,14 @@ a {
 
 .Body_Three {
     display: flex;
-    /* height: 600px; */
+    align-items: center;
 }
 
 
 .arrows{
-    display: inline;
-    /* position: fixed; */
+    display: inline-block;
+    width: 15%;
+    height: 2%;
 }
 .arrows:hover{
     cursor: pointer;
@@ -170,8 +171,8 @@ a {
 <script>
   var i = 0;
   var data = [
-    '<h4><b>Adhiraj </b></h4> <br> <div>Student Leader– Club Squash, Tufts University, MA</div> <br> “We enlisted SteerMyEvent’s services for our annual Club Squash formal in the Spring of 2020. Up until then, we used to organize our event at an on-campus location with minimal setting up and limited food and drinks. SteerMyEvent not only helped us find a pocket-friendly local venue that could host our event, but also set up our menu and bar in a way that we could not have ever imagined. Their team comprises some of the smartest and most creative planners you can find today - they will not only make sure your event is destined for success, but also keep an eye on your budget and assure you the best service possible. We will definitely be coming back to them for any other events we host in the future - maybe even our tournaments!”',
     '<h4><b>Amanda </b></h4> <br> <div> Founder & CEO– YoungBuzz, Boston, MA </div> <br> “At YoungBuzz, we try to host 2-3 events every quarter to engage all of our patrons and help them network with one another. Before we discovered SteerMyEvent, we used to have an internal event planning team - not only was it a huge dent on our finances, but we  also felt that we were not making the optimal use of our internal resources by dedicating them towards event planning. SteerMyEvent gives us service worth an entire events team for the cost of just one employee, and aces every aspect of event planning that you can think of. Right from choosing a theme to executing it and making sure everyone who attends absolutely falls in love with it, SteerMyEvent stays true to their mission to drive you crazy with their creativity. If you are a young company such as mine that relies on events for customer acquisition and engagement, drop everything you  are doing and partner with SteerMyEvent. They never fail to impress.”',
+    '<h4><b>Adhiraj </b></h4> <br> <div>Student Leader– Club Squash, Tufts University, MA</div> <br> “We enlisted SteerMyEvent’s services for our annual Club Squash formal in the Spring of 2020. Up until then, we used to organize our event at an on-campus location with minimal setting up and limited food and drinks. SteerMyEvent not only helped us find a pocket-friendly local venue that could host our event, but also set up our menu and bar in a way that we could not have ever imagined. Their team comprises some of the smartest and most creative planners you can find today - they will not only make sure your event is destined for success, but also keep an eye on your budget and assure you the best service possible. We will definitely be coming back to them for any other events we host in the future - maybe even our tournaments!”',
     '<h4><b>Julia </b></h4> <br> <div> A Working Mother– Walpole, MA</div> <br> <div> “Anyone who works in finance knows that the hustle never stops, whether it is April or November. In my case, however, April and November are twice as stressful as normal, because that is when my two little ones celebrate their birthdays every year. And as with most kids, they want their celebrations to be as grand as possible. While I would love to give planning their parties as much time as it deserves, I cannot possibly guarantee it. SteerMyEvent is a bonafide savior.They are absolute champions at planning the themes, venues, menu, and everything in between for my kids’ birthdays, and have been loyally delivering successful parties for us ever since my older one turned 3. They are not old enough to know that it is not their mommy planning these events for them, and I never shy away from taking the credit and love I get from them for it. Not only is SteerMyEvent the perfect party planner, but also, the perfect substitute mother!”'
   ];
 
@@ -251,10 +252,10 @@ a {
         <img src="./images/left-arrow.png" id="left" class="arrows" onclick="changeTestimonial(this);"/>
         <div class="card" id="1">
             <div class="container" id="test">
-                <h4><b> Adhiraj </b></h4> <br> <div>Student Leader– Club Squash, Tufts University, MA</div> <br>“We enlisted SteerMyEvent’s services for our annual Club Squash formal in the Spring of 2020. Up until then, we used to organize our event at an on-campus location with minimal setting up and limited food and drinks. SteerMyEvent not only helped us find a pocket-friendly local venue that could host our event, but also set up our menu and bar in a way that we could not have ever imagined. Their team comprises some of the smartest and most creative planners you can find today - they will not only make sure your event is destined for success, but also keep an eye on your budget and assure you the best service possible. We will definitely be coming back to them for any other events we host in the future - maybe even our tournaments!”
+                <h4><b>Amanda </b></h4> <br> <div> Founder & CEO– YoungBuzz, Boston, MA </div> <br> “At YoungBuzz, we try to host 2-3 events every quarter to engage all of our patrons and help them network with one another. Before we discovered SteerMyEvent, we used to have an internal event planning team - not only was it a huge dent on our finances, but we  also felt that we were not making the optimal use of our internal resources by dedicating them towards event planning. SteerMyEvent gives us service worth an entire events team for the cost of just one employee, and aces every aspect of event planning that you can think of. Right from choosing a theme to executing it and making sure everyone who attends absolutely falls in love with it, SteerMyEvent stays true to their mission to drive you crazy with their creativity. If you are a young company such as mine that relies on events for customer acquisition and engagement, drop everything you  are doing and partner with SteerMyEvent. They never fail to impress.
             </div>
         </div>
-        <img src="./images/right-arrow.png" id="right" onclick="changeTestimonial(this);"/>
+        <img src="./images/right-arrow.png" id="right" class="arrows" onclick="changeTestimonial(this);"/>
     </div>
 
       <footer>
