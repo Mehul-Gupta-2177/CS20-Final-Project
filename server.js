@@ -124,7 +124,7 @@ http.createServer(function (req, res) {
                         content += `<div>Maximum Capacity: ${results[i]["maxCapacity"]}</div>`;
                         content += `<div>Flat Fee: $${results[i]["flatFee"]}</div>`;
                         content += "<br>";
-                        content += `<div>Venue Website: <a style='color: #C19A6B; text-decoration: underline;' href=${results[i]["website"]} >${results[i]["name"]}</a></div>`;
+                        content += `<div>Venue Website: <a target="_blank" style='color: #C19A6B; text-decoration: underline;' href=${results[i]["website"]} >${results[i]["name"]}</a></div>`;
                         content += "<br>";
                     }
 
